@@ -1,0 +1,4 @@
+rootProject.name = 'observation root'
+include 'fake-observation-gen', 'observation-db'
+
+
