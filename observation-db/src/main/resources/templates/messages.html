@@ -1,0 +1,7 @@
+<table>
+	<tr th:each="msg: ${messages}">
+	    <td th:text="${msg.timestamp}" />
+	    <td th:text="${msg.level}" />
+	    <td th:text="${msg.message}" />
+	</tr>
+</table>

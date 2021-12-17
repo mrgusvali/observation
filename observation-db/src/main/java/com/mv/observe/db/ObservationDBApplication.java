@@ -1,18 +1,20 @@
 package com.mv.observe.db;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.web.client.RestTemplate;
-
 import java.time.Duration;
 
 import javax.sql.DataSource;
 
-/** Configure a Spring app with REST & H2 persistence with a single database table for the event type */
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Description;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.web.client.RestTemplate;
+
+/** Configure a Spring app with REST, H2 persistence and Thymeleaf templates */
 @SpringBootApplication
 public class ObservationDBApplication {
 
@@ -34,4 +36,14 @@ public class ObservationDBApplication {
 	      .setType(EmbeddedDatabaseType.H2)
 	      .build();
 	}
+	
+	// l10n messages from property file
+	@Bean
+	@Description("Spring Message Resolver")
+	public ResourceBundleMessageSource messageSource() {
+	    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+	    messageSource.setBasename("messages");
+	    return messageSource;
+	}	
+	
 }

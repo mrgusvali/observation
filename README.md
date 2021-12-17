@@ -1,5 +1,10 @@
 # observation-db
 Web app to consume events from fake-observation-gen and present a browser map view.
+
+Web app is to demonstrate Thymeleaf HTML,JS,CSS content rather than JSP, 
+React UI library to transform JS data into HTML document's form elements, 
+basic CSS, Openlayers library for a map view.
+
 ***
 Building
 
@@ -21,7 +26,7 @@ INFO 18145 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomc
 
 ## Running the event publisher (in another terminal) 
 
-First, configure fake-observation-gen/src/main/resources/application.properties to change direct it to the DB consumer,
+First, configure fake-observation-gen/src/main/resources/application.properties to direct it to the DB consumer,
 then run the event publisher:
 
 msg-gathering-server.url=http://localhost:8081/consumer/
@@ -33,3 +38,5 @@ The events would start to appear on the DB consumer log:
 INFO 18145 --- [nio-8081-exec-3] c.m.o.d.c.MsgConsumerController          : Message(id=4305a68b-6010-435e-b7c2-0dec804718f3, timestamp=Thu Dec 16 14:02:08 EET 2021, level=MEDIUM, senderCode=OBSERVER-ONE, coordLat=59.351032, coordLon=27.244596, message=Some MEDIUM level message)
 
 ```
+## Web page
+  http://localhost:8081/
