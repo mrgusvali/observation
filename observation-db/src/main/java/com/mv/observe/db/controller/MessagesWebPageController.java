@@ -17,6 +17,7 @@ import com.mv.observe.db.model.FilterCriteria;
 import lombok.extern.java.Log;
 import net.vesilik.fakeobservationgen.domain.Message;
 
+/** Passages to web pages via Thymeleaf templates */
 @Controller
 @Log
 public class MessagesWebPageController {
@@ -37,6 +38,7 @@ public class MessagesWebPageController {
     @PostMapping(path="/")
     public String query(@ModelAttribute FilterCriteria filterCriteria, BindingResult errors, Model model)
     {
+    	// TODO: validate criteria posted from html form
     	packMessages(model);
 		return "messages";
     }

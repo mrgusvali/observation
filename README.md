@@ -2,7 +2,7 @@
 Web app to consume events from fake-observation-gen and present a browser map view.
 
 Web app is to demonstrate Thymeleaf HTML,JS,CSS content rather than JSP, 
-React UI library to transform JS data into HTML document's form elements, 
+React UI library under to transform JS data into HTML document's form elements, 
 basic CSS, Openlayers library for a map view.
 
 ***
@@ -39,4 +39,6 @@ INFO 18145 --- [nio-8081-exec-3] c.m.o.d.c.MsgConsumerController          : Mess
 
 ```
 ## Web page
-  http://localhost:8081/
+
+The plain HTML with Thymeleaf templates at http://localhost:8081/
+For ReactJS app, see react-app/README.md (npm start opens a browser page).
