@@ -41,4 +41,4 @@ INFO 18145 --- [nio-8081-exec-3] c.m.o.d.c.MsgConsumerController          : Mess
 ## Web page
 
 The plain HTML with Thymeleaf templates at http://localhost:8081/
-For ReactJS app, see react-app/README.md (npm start opens a browser page).
+For ReactJS app with Leaflet mapview, see react-app/README.md (npm start opens a browser page).
