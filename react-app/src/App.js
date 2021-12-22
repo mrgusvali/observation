@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 /** gather level and time interval for messages query, then emit onSubmit() with state */
 class FilterForm extends React.Component {
@@ -24,7 +25,7 @@ class FilterForm extends React.Component {
   render() {
 	return (
 	  <div id="FilterForm">
-	   <label>Include message level and above
+	   <label>Include message level
 	     <select onChange={this.setLevel}> {this.codes.map(l=><option key={l}>{l}</option>)} </select>
 	   </label>	   
 	   <p/>
@@ -48,21 +49,49 @@ function MessagesList(props) {
       return <div>Messages List Error: {error.message}. Is the web service running?</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
-    //} else if (items.length() == 0) {
-    //  return <div>An empty list...has fake-observation-gen produced an event yet?</div>;    
+    } else if (items.length == 0) {
+      return <div>An empty list...has fake-observation-gen produced an event yet?</div>;    
       //return <div>An empty list</div>;    
     } else {
       return (
-        <ul id="MessagesList">
-          {items.map(msg => (
-            <li key={msg.id}>
-              {new Date(msg.timestamp).toLocaleTimeString()}
-              &nbsp;{msg.senderCode}: {msg.message}
-            </li>
-          ))}
-        </ul>
+        <div id="MessagesList">
+         {items.map(i=><label key={i.id}>{new Date(i.timestamp).toLocaleTimeString()}:{i.message}<br/></label>)}
+        </div>
       );
     }
+}
+
+function Map(props) {
+
+	function calculateCenterCoordinates(list) { // avg of extemes
+		const arrayAvgOfExtremes = (coordinateLocator) => {
+				if (list.length==1) return coordinateLocator(list[0])
+				const sorted = list.map(coordinateLocator).sort()
+				return (sorted[sorted.length-1] - sorted[0]) / 2
+			}
+		
+		const centerLat = arrayAvgOfExtremes(msg=>msg.coordLat)
+		const centerLon = arrayAvgOfExtremes(msg=>msg.coordLon)
+		
+		return [centerLat, centerLon]
+	}
+	
+	let center = [58.9996,24.8093]
+	let messages = []
+	const st = props.loadedState
+	if (st.isLoaded && !st.error && st.items.length>0) {
+		messages = st.items
+		center = calculateCenterCoordinates(messages)
+		console.log("center at ", center)
+	}
+	return (
+		<div id="map">
+			<MapContainer id="mapcontainer" center={center} zoom={7}>
+			  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+	          {messages.map(message => <Marker key={message.id} position={[message.coordLat, message.coordLon]} />)}
+			</MapContainer>		
+		</div>		
+	);
 }
 
 
@@ -127,9 +156,8 @@ class MessagesTool extends React.Component {
 				initialState={this.state.filterCriteria} 
 				onSubmit={this.handleFilterFormSubmit} />
 	  </header>
-      <MessagesList 
-			loadedState={this.state.loadedState} />
-	   <div id="map">       </div>				    
+      <MessagesList loadedState={this.state.loadedState} />
+	  <Map loadedState={this.state.loadedState} />				    
     </div>
   );
   }
